@@ -41,15 +41,15 @@ class Joystick:
   def __init__(self, gamepad=False):
     # TODO: find a way to get this from API, perhaps "inputs" doesn't support it
     if gamepad:
-      self.cancel_button = 'BTN_NORTH'  # (BTN_NORTH=X, ABS_RZ=Right Trigger)
+      self.cancel_button = 'BTN_NORTH'  # (BTN_NORTH=Y, ABS_RZ=Right Trigger)
+      accel_axis = 'ABS_Y' #Left Stick Up/Down
+      steer_axis = 'ABS_RX' #Right Stick Left/Right
+    else:
+      self.cancel_button = 'BTN_NORTH'
       accel_axis = 'ABS_Y'
       steer_axis = 'ABS_RX'
-    else:
-      self.cancel_button = 'BTN_TRIGGER'
-      accel_axis = 'ABS_Y'
-      steer_axis = 'ABS_RZ'
-    self.min_axis_value = {accel_axis: 0., steer_axis: 0.}
-    self.max_axis_value = {accel_axis: 255., steer_axis: 255.}
+    self.min_axis_value = {accel_axis: -32767., steer_axis: -32767.} #Xbox Controller Joysticks output 16 bit signed ints, interp requires array of floats
+    self.max_axis_value = {accel_axis: 32768., steer_axis: 32768.}
     self.axes_values = {accel_axis: 0., steer_axis: 0.}
     self.axes_order = [accel_axis, steer_axis]
     self.cancel = False
